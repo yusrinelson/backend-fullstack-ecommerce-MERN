@@ -12,6 +12,7 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
+
 console.log("MONGODB_URI:", process.env.MONGODB_URI);
 console.log("JWT_SECRET:", process.env.JWT_SECRET);
 console.log("PORT:", process.env.PORT);
@@ -22,11 +23,11 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Server Port
 const port = process.env.PORT || 4000;
 
-
+const API_URL = process.env.REACT_APP_API_URL;
 
 //Api creation
 app.get("/", (req, res) => {
-    res.send("Express App is now running")
+    res.send("Express App is now running ;)")
 })
 
 //image storage engine
@@ -40,10 +41,11 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 //creating uplload endpoint for images
 app.use("/images", express.static("upload/images"))
+
 app.post("/upload", upload.single("product"), (req, res) => {
     res.json({
         success: 1,
-        image_url: `http://localhost:${port}/images/${req.file.filename}`
+        image_url: `http://localhost:4000/images/${req.file.filename}`
     })
 })
 
